@@ -1,3 +1,4 @@
+
 #Marshal Zhange from S3C3
 # This is my code for "Monopoly"
 
@@ -111,7 +112,6 @@ def buy(p):
             mb-= cost
             List[b].whose=p
 
-def Lucky():
     
     
 def Output():
@@ -120,8 +120,7 @@ def Output():
     print("player1 has", ma, "dollars")
     print("player2 has", mb, "dollars")
     if ma<0:
-        print("player2
-              is the winner, with", mb, "dollars")
+        print("player2 is the winner, with", mb, "dollars")
     if mb<0:
         print("player1 is the winner, with", ma, "dollars")
         
