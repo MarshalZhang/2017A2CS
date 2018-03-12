@@ -1,5 +1,5 @@
 # pickle.dump
-# zhang chenyang Rex
+# Marshal Zhang from Option 1
 import pickle
 class Car(object):
     def __init__(self, name, year, owner):
@@ -15,6 +15,7 @@ Set[1] = Car('Ferrari',2008,'R');
 Set[2] = Car('Benz',2007,'Z');
 Set[3] = Car('BMW',2011,'R');
 Set[4] = Car('Audi',2017,'Z');
+
 def add(n,y,o):
     i = 0;
     while True:
@@ -39,3 +40,6 @@ def load():
     for i in range(5):
          Set1.append(pickle.load(file));
     print(Set1)
+
+save()
+load()

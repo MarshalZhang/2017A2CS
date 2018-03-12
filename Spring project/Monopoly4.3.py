@@ -47,8 +47,6 @@ def initilise():
         Char[i].pointer = i+2
         Char[i].previouspointer =i
         List[l[i]].who=i+1
-        List[List[l[i]].previouspointer].pointer=List[l[i]].pointer
-        List[List[l[i]].pointer].previouspointer=List[l[i]].previouspointer
     Char[0].previouspointer = np
     Char[np-1].pointer=1
     # for lucky and bad luck
@@ -71,10 +69,9 @@ def Lucky(p):
         print("you get the luck to move 2 more steps")
         playergo(p)
         Output()
-        checkwin()
+        checkwin(p)
         playergo(p)
-        Output()
-        checkwin()
+        checkwin(p)
 
 def Unlucky(p):
     l=random.randint(1,3)
@@ -103,18 +100,14 @@ def playergo(p):
     if ndice==2:
         n=r+rr
     print("The number of steps that you go is:",n)
-    x=0   # Count the number of time that we go through
-    List[List[w].previouspointer].pointer=w
-    List[List[w].pointer].previouspointer=w
-    while List[w].who==p and x!=n:
-         List[w].who = 0
-         w=List[w].pointer
-         List[w].who=p
-
-         x+=1
+    List[w].who = 0
+    while n!=0:
+        if List[List[w].pointer].who==0 or List[List[w].pointer].who==p:
+             n-=1
+        w=List[w].pointer
+    
     Char[p-1].position=w
-    List[List[w].previouspointer].pointer=List[w].pointer
-    List[List[w].pointer].previouspointer=List[w].previouspointer
+    List[w].who=p
     if List[w].whose==0:
         buy(p)
     elif p==List[w].whose:
@@ -128,10 +121,10 @@ def playergo(p):
     
 def Output():
     for i in range(nh):
-        print(i, List[i].who, List[i].whose, List[i].cost,List[i].previouspointer,List[i].pointer)
+        print(i, List[i].who, List[i].whose, List[i].cost)
     print("")
     for i in range(np):
-        print(i+1, Char[i].position, Char[i].money,Char[i].previouspointer, Char[i].pointer)
+        print(i+1, Char[i].position, Char[i].money)
 
 def buy(p):
     cost=List[Char[p-1].position].cost
@@ -158,30 +151,27 @@ def pay(p,r):
 initilise()
 Output()
 p=1
-def checkwin():
+def checkwin(p):
     global Onlyoneleft
-    x=np
-    for i in range(np):
-        if Char[i].money <0:
-            print("Player", i+1, "has no money left, his houses are now free to buy")
-            Char[Char[i].previouspointer].pointer= Char[i].pointer   #remove the player
-            Char[Char[i].pointer].previouspointer= Char[i].previouspointer
-            for j in range(nh):
-                if List[j].who==i+1:
-                    List[j].who==0
-                if List[j].whose==i+1:
-                    List[j].whose=0    #make all his houses free
-        if Char[i].pointer==Char[i].who:
-            print("Player", i+1,"is the winner")
-            Onlyoneleft=True
+    if Char[p-1].money <0:
+       print("Player", p, "has no money left, his houses are now free to buy")
+       Char[Char[p-1].previouspointer-1].pointer= Char[p-1].pointer   #remove the player
+       Char[Char[p-1].pointer-1].previouspointer= Char[p-1].previouspointer
+       for j in range(nh):
+          if List[j].who==p:
+             List[j].who=0       #make the player's position disappear
+          if List[j].whose==p:
+             List[j].whose=0    #make all his houses free
+    if Char[Char[p-1].pointer-1].pointer==Char[Char[p-1].pointer-1].who:
+      print("Player",Char[Char[p-1].pointer-1].who,"is the winner")
+      Onlyoneleft=True
         
-                
-StartPointer=0
+               
 Onlyoneleft=False
-while Onlyoneleft==False:   #only for 2 playrs now
+while Onlyoneleft==False:   #only for 2 players now
     playergo(p)
-    p=Char[p-1].pointer
     Output()
-    checkwin()
+    checkwin(p)
+    p=Char[p-1].pointer
     
         
