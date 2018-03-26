@@ -34,19 +34,17 @@ elementat(A,[_|T],K):-
        R is K-1,
        elementat(A,T,R).
 
-reverse([a,b,c],[c,b,a]).
-reverse([a],[a]).
-reverse([],[]).
+
+reverse([A],[A]).
 reverse([A|B],L):-
-       reverse(B,R),
-       myappend(A,R,L).
+	append(R,[A],L),
+	reverse(B,R).
+       
 
 palindrome(A):-
     reverse(A,B),
     A==B.
 
-same(X,Y):-
-   X==Y.
    
      
 
